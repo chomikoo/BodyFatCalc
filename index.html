@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Body Fat Calculator">
+    <meta name="keywords" content="body, fat, calculator,fit, fat loss, gym, diet">
+    <meta name="author" content="Szymon Trzepla">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>BF Calculator</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:400,700&amp;subset=latin-ext" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="head">
+            <h1>Body Fat Calculator</h1>
+        </div>
+    </header>
+
+    <main>
+        <div id="wrap" class="container">
+
+            <!--            Metric/Imperial-->
+            <div class="radios">
+                <div id="select-system">
+
+                    <div class="radio-wrap">
+                        <input type="radio" name="system" id="metric" value="metric" aria-label="metric measure system" hidden checked>
+                        <label for="metric" class="radio-inline"><span></span>Metryczny</label>
+                    </div>
+
+                    <div class="radio-wrap">
+                        <input type="radio" name="system" id="imperial" value="us" aria-label="imperial measure system" hidden>
+                        <label for="imperial" class="radio-inline"><span></span>Imperialny US</label>
+                    </div>
+
+                </div>
+                <!--sex-->
+                <div id="select-sex">
+
+                    <div class="radio-wrap">
+                        <input type="radio" name="sex" id="male" value="male" aria-label="male" hidden checked>
+                        <label for="male" class="radio-inline"><span></span>Mężczyzna</label>
+                    </div>
+
+                    <div class="radio-wrap">
+                        <input type="radio" name="sex" id="female" value="female" aria-label="female" hidden>
+                        <label for="female" class="radio-inline">
+                        <span></span>Kobieta</label>
+                    </div>
+                </div>
+            </div>
+            <!--            InputForms US Navy Method-->
+            <form id="input-form">
+                <div class="form-group">
+                    <label for="height" id="labelH">Wzrost [cm] : </label>
+                    <input type="number" class="form-control" step="0.5" min='1' name="height" id="height">
+                </div>
+
+                <div class="form-group">
+                    <label for="weight" id="labelW">Waga [kg] : </label>
+                    <input type="number" class="form-control" step="0.5" min='1' name="weight" id="weight">
+                </div>
+
+                <div class="form-group">
+                    <label for="neck" id="labelN">Kark [cm] : </label>
+                    <input type="number" class="form-control" step="0.5" min='1' name="neck" id="neck">
+                </div>
+
+                <div class="form-group">
+                    <label for="waist" id="labelWa">Talia [cm] : </label>
+                    <input type="number" class="form-control" step="0.5" min='1' name="waist" id="waist">
+                </div>
+
+                <div class="form-group">
+                    <label for="hip" id="labelHi">Biodra [cm] : </label>
+                    <input type="number" class="form-control" step="0.5" min='1' name="hip" id="hip">
+                </div>
+
+                <button id="btn" class="btn btn-default btn-lg btn-block" type="button">Przelicz</button>
+
+            </form>
+            
+            <div id="alert"></div>
+
+            <!--           MODAL   -->
+
+            <div id="modal" class="modal">
+                <!--                content    -->
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <div id="bf"></div>
+                </div>
+
+            </div>
+
+
+
+
+    </main>
+
+    <footer></footer>
+
+    <script src="modal.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
