@@ -72,9 +72,9 @@ function bodyFat(system) {
     //    MODAL
     if (bf > 0) {
         modal.style.display = "block";
-        document.getElementById("bf").innerHTML = "<p class=\"bf_container\"> Twój BF to " + bf + " %</p><p class=\"bf_desc\">Tłuszcz w twoim ciele to ok. " + fatInBody  + "[kg] </p>";
+        document.getElementById("bf").innerHTML = "<p class=\"bf_container\"> Twój BF to " + bf + " %</p><p class=\"bf_desc\">Masa tłuszczu w twoim ciele to ok. " + fatInBody  + "[kg] </p>";
     } else {
-        document.getElementById("alert").innerHTML = "<p> Czy napewno wypełniłeś wszystkie pola ?</p>";
+        document.getElementById("alert").innerHTML = "<p> Czy na pewno poprawnie wypełniłeś wszystkie pola ?</p>";
     }
     return bf;
 
@@ -92,7 +92,9 @@ document.addEventListener("DOMContentLoaded", function () {
         system = document.getElementsByName("system"),
         btn = document.getElementById("btn");
 
-    selectSystem.addEventListener("click", cheackingSys(system), false);
+    selectSystem.addEventListener("click", function() {
+        cheackingSys(system)}, false);
+    
     btn.addEventListener("click", function() {
         bodyFat(system);
     });

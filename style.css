@@ -19,7 +19,8 @@ body {
 }
 
 .container {
-    width: 400px;
+    max-width:  520px;
+    min-width: 300px;
     margin: 0 auto;
     padding: 25px;
     border-radius: 5px;
@@ -126,7 +127,6 @@ input[type=number]::-webkit-inner-spin-button {
 .bf_desc {
     text-align: center;
     font-size: 2em;
-    white-space: nowrap;
 }
 /* --==MODAL==-- */
 
@@ -144,7 +144,7 @@ input[type=number]::-webkit-inner-spin-button {
     margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 50%;
+    width: 75%;
 }
 .close {
     color: #ff0000;
@@ -160,3 +160,4 @@ input[type=number]::-webkit-inner-spin-button {
     text-decoration: none;
     cursor: pointer;
 }
+
