@@ -38,12 +38,15 @@ function setPLLabels() {
 function bodyFat(system) {
     var sex = document.getElementsByName("sex"),
         height = document.getElementById("height").value,
-        weight = document.getElementById("weight").value,
+
         neck = document.getElementById("neck").value,
         waist = document.getElementById("waist").value,
         hip = document.getElementById("hip").value,
-        ratioW,
-        fatInBody;
+        ratioW;
+
+    fatInBody;
+    weight = document.getElementById("weight").value
+
 
     ratio = cheackingSys(system);
 
@@ -72,7 +75,7 @@ function bodyFat(system) {
     //    MODAL
     if (bf > 0) {
         modal.style.display = "block";
-        document.getElementById("bf").innerHTML = "<p class=\"bf_container\"> Twój BF to " + bf + " %</p><p class=\"bf_desc\">Masa tłuszczu w twoim ciele to ok. " + fatInBody  + "[kg] </p>";
+        document.getElementById("bf").innerHTML = "<p class=\"bf_container\"> Twój BF to " + bf + " %</p><p class=\"bf_desc\">Masa tłuszczu w twoim ciele to ok. " + fatInBody + "[kg] </p>";
     } else {
         document.getElementById("alert").innerHTML = "<p> Czy na pewno poprawnie wypełniłeś wszystkie pola ?</p>";
     }
@@ -92,11 +95,28 @@ document.addEventListener("DOMContentLoaded", function () {
         system = document.getElementsByName("system"),
         btn = document.getElementById("btn");
 
-    selectSystem.addEventListener("click", function() {
-        cheackingSys(system)}, false);
-    
-    btn.addEventListener("click", function() {
+    selectSystem.addEventListener("click", function () {
+        cheackingSys(system)
+    }, false);
+
+    btn.addEventListener("click", function () {
         bodyFat(system);
     });
+ 
+//d hdf   hdh d    h  dg  h  
 
+    var ctx = document.getElementById("myChart").getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ["M", "T"],
+            datasets: [{
+                backgroundColor: [
+        "#2ecc71",
+        "#3498db"
+      ],
+                data: [fatInBody, weight - fatInBody]
+    }]
+        }
+    });
 });

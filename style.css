@@ -20,7 +20,7 @@ body {
 
 .container {
     max-width:  520px;
-    min-width: 300px;
+    min-width: 260px;
     margin: 0 auto;
     padding: 25px;
     border-radius: 5px;
@@ -37,7 +37,7 @@ body {
 }
 
 
-/*//Radio inputs*/
+/*Radio inputs*/
 
 .radio-wrap {
     display: inline-block;
