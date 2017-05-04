@@ -1,26 +1,6 @@
 /* jshint browser: true */
-
-//CHECKING MEASURE SYS
-function cheackingSys(system) {
-    var ratio = 1,
-        ratioW = 1;
-
-    if (system[0].checked) {
-        ratio = 0.39;
-        
-        setPLLabels();
-        console.log(ratioW + " M " + ratio);
-    } else if (system[1].checked) {
-        ratio = 1;
-        ratioW = 2.2;
-        setUSLabels();
-        console.log(ratioW + " us " + ratio);
-    }
-    var ratioArr = [ratio, ratioW];
-
-    return ratioArr;
-};
-
+/*jslint latedef:false*/
+/*global labelH, labelW, labelN, labelWa, labelHi, ratio, bf, waist, height, hip, modal, weight, neck,Chart*/
 //SET LABELS
 
 function setUSLabels() {
@@ -29,7 +9,7 @@ function setUSLabels() {
     labelN.innerHTML = "Neck [inch] :";
     labelWa.innerHTML = "Waist [inch] :";
     labelHi.innerHTML = "Hip [inch] :";
-};
+}
 
 function setPLLabels() {
     labelH.innerHTML = "Wzrost [cm] :";
@@ -37,32 +17,49 @@ function setPLLabels() {
     labelN.innerHTML = "Kark [cm] :";
     labelWa.innerHTML = "Talia [cm] :";
     labelHi.innerHTML = "Biodra [cm] :";
-};
+}
+//CHECKING MEASURE SYS
+function cheackingSys(system) {
+    var ratio = 1,
+        ratioW = 1;
 
-function fatInBody(weight, bf) {
-    console.log("fat in body" + weight.value + " bf " + bf + " ratio W " + ratio[1] );
+    if (system[0].checked) {
+        ratio = 0.39;
+        setPLLabels();
+//        console.log(ratioW + " M " + ratio);
+    } else if (system[1].checked) {
+        ratio = 1;
+        ratioW = 2.2;
+        setUSLabels();
+//        console.log(ratioW + " us " + ratio);
+    }
+    var ratioArr = [ratio, ratioW];
+
+    return ratioArr;
+}
+
+
+
+function fatInBody(weight, bf, ratio) {
+//    console.log(ratio[1] + " wyw");
     return Math.round((weight.value / ratio[1] * bf) / 100);
+    
 }
 //BODY FAT CALCULATOR
 function bodyFat(system, sex) {
 
-
     ratio = cheackingSys(system);
-    
-    
-    console.log("Waist " + waist.value + " neck " + neck.value + " height " + height.value + " ratio " + ratio[0] + " " + sex[0].checked);
+
     //CHECKING SEX
 
     if (sex[0].checked) {
         bf = Math.round((86.010 * Math.log10((waist.value * ratio[0]) - (neck.value * ratio[0])) - 70.041 * Math.log10(height.value * ratio[0]) + 36.76) * 10) / 10; // for man
-        console.log(Math.round(bf * 10) / 10 + " % Male");
+//        console.log(Math.round(bf * 10) / 10 + " % Male");
     } else if (sex[1].checked) {
         bf = Math.round((163.205 * Math.log10((waist.value * ratio[0]) + (hip.value * ratio[0]) - (neck.value * ratio[0])) - 97.684 * Math.log10(height.value * ratio[0]) - 78.387) * 10) / 10; // for woman
-        console.log(Math.round(bf * 10) / 10 + " % Female");
+//        console.log(Math.round(bf * 10) / 10 + " % Female");
     }
-    
-//fatInBody = fatInBody(weight, bf, ratio);
-    
+
     //    MODAL
     if (bf > 0) {
         modal.style.display = "block";
@@ -70,24 +67,24 @@ function bodyFat(system, sex) {
     } else {
         document.getElementById("alert").innerHTML = "<p> Czy na pewno poprawnie wypełniłeś wszystkie pola ?</p>";
     }
-    
+    //CHART 
     var ctx = document.getElementById("myChart").getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: ["Tłuszcz", "Reszta"],
-                datasets: [{
-                    backgroundColor: [
+    var myChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ["Tłuszcz", "Reszta"],
+            datasets: [{
+                backgroundColor: [
             "#89253E",
             "#d1d1d1"
           ],
-                    data: [fatInBody(weight, bf, ratio), (weight.value - fatInBody(weight, bf, ratio))]
+                data: [fatInBody(weight, bf, ratio), (weight.value - fatInBody(weight, bf, ratio))]
         }]
-            }
-        });
+        }
+    });
     return bf;
 
-};
+}
 
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -108,16 +105,16 @@ document.addEventListener("DOMContentLoaded", function () {
         system = document.getElementsByName("system"),
         btn = document.getElementById("btn");
 
-    selectSystem.addEventListener("click", function () {
-        cheackingSys(system)
-    }, false);
 
+
+
+    selectSystem.addEventListener("click", function () {
+        cheackingSys(system);
+    }, false);
 
     btn.addEventListener("click", function () {
         bodyFat(system, sex);
     });
 
-    //d hdf   hdh d    h  dg  h  
-  
-        
+
 });
