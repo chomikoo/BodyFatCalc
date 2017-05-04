@@ -7,17 +7,22 @@ function cheackingSys(system) {
 
     if (system[0].checked) {
         ratio = 0.39;
-        //        ratioW = 2.2;
+        
         setPLLabels();
         console.log(ratioW + " M " + ratio);
     } else if (system[1].checked) {
         ratio = 1;
+        ratioW = 2.2;
         setUSLabels();
-        console.log(ratioW + " L " + ratio);
+        console.log(ratioW + " us " + ratio);
     }
-    return ratio;
+    var ratioArr = [ratio, ratioW];
+
+    return ratioArr;
 };
+
 //SET LABELS
+
 function setUSLabels() {
     labelH.innerHTML = "Height [inch] :";
     labelW.innerHTML = "Weight [lbs] :";
@@ -34,51 +39,52 @@ function setPLLabels() {
     labelHi.innerHTML = "Biodra [cm] :";
 };
 
+function fatInBody(weight, bf) {
+    console.log("fat in body" + weight.value + " bf " + bf + " ratio W " + ratio[1] );
+    return Math.round((weight.value / ratio[1] * bf) / 100);
+}
 //BODY FAT CALCULATOR
-function bodyFat(system) {
-    var sex = document.getElementsByName("sex"),
-        height = document.getElementById("height").value,
-
-        neck = document.getElementById("neck").value,
-        waist = document.getElementById("waist").value,
-        hip = document.getElementById("hip").value,
-        ratioW;
-
-    fatInBody;
-    weight = document.getElementById("weight").value
+function bodyFat(system, sex) {
 
 
     ratio = cheackingSys(system);
-
+    
+    
+    console.log("Waist " + waist.value + " neck " + neck.value + " height " + height.value + " ratio " + ratio[0] + " " + sex[0].checked);
     //CHECKING SEX
 
     if (sex[0].checked) {
-        bf = Math.round((86.010 * Math.log10((waist * ratio) - (neck * ratio)) - 70.041 * Math.log10(height * ratio) + 36.76) * 10) / 10; // for man
+        bf = Math.round((86.010 * Math.log10((waist.value * ratio[0]) - (neck.value * ratio[0])) - 70.041 * Math.log10(height.value * ratio[0]) + 36.76) * 10) / 10; // for man
         console.log(Math.round(bf * 10) / 10 + " % Male");
     } else if (sex[1].checked) {
-        bf = Math.round((163.205 * Math.log10((waist * ratio) + (hip * ratio) - (neck * ratio)) - 97.684 * Math.log10(height * ratio) - 78.387) * 10) / 10; // for woman
+        bf = Math.round((163.205 * Math.log10((waist.value * ratio[0]) + (hip.value * ratio[0]) - (neck.value * ratio[0])) - 97.684 * Math.log10(height.value * ratio[0]) - 78.387) * 10) / 10; // for woman
         console.log(Math.round(bf * 10) / 10 + " % Female");
     }
-
-    //Overall proportion of fat in the body
-    if (system[0].checked) {
-        ratioW = 1;
-    } else {
-        ratioW = 2.2;
-    }
-    console.log(ratioW + ' W ')
-    fatInBody = Math.round((weight * ratioW * bf) / 100);
-
-
-
-
+    
+//fatInBody = fatInBody(weight, bf, ratio);
+    
     //    MODAL
     if (bf > 0) {
         modal.style.display = "block";
-        document.getElementById("bf").innerHTML = "<p class=\"bf_container\"> Twój BF to " + bf + " %</p><p class=\"bf_desc\">Masa tłuszczu w twoim ciele to ok. " + fatInBody + "[kg] </p>";
+        document.getElementById("bf").innerHTML = "<p class=\"bf_container\"> Twój BF to " + bf + " %</p><p class=\"bf_desc\">Masa tłuszczu w twoim ciele to ok. " + fatInBody(weight, bf, ratio) + "[kg] </p>";
     } else {
         document.getElementById("alert").innerHTML = "<p> Czy na pewno poprawnie wypełniłeś wszystkie pola ?</p>";
     }
+    
+    var ctx = document.getElementById("myChart").getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ["Tłuszcz", "Reszta"],
+                datasets: [{
+                    backgroundColor: [
+            "#89253E",
+            "#d1d1d1"
+          ],
+                    data: [fatInBody(weight, bf, ratio), (weight.value - fatInBody(weight, bf, ratio))]
+        }]
+            }
+        });
     return bf;
 
 };
@@ -91,6 +97,13 @@ document.addEventListener("DOMContentLoaded", function () {
         labelWa = document.getElementById("labelWa"),
         labelHi = document.getElementById("labelHi");
 
+    var sex = document.getElementsByName("sex"),
+        height = document.getElementById("height"),
+        weight = document.getElementById("weight"),
+        neck = document.getElementById("neck"),
+        waist = document.getElementById("waist"),
+        hip = document.getElementById("hip");
+
     var selectSystem = document.getElementById("select-system"),
         system = document.getElementsByName("system"),
         btn = document.getElementById("btn");
@@ -99,24 +112,12 @@ document.addEventListener("DOMContentLoaded", function () {
         cheackingSys(system)
     }, false);
 
-    btn.addEventListener("click", function () {
-        bodyFat(system);
-    });
- 
-//d hdf   hdh d    h  dg  h  
 
-    var ctx = document.getElementById("myChart").getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'pie',
-        data: {
-            labels: ["M", "T"],
-            datasets: [{
-                backgroundColor: [
-        "#2ecc71",
-        "#3498db"
-      ],
-                data: [fatInBody, weight - fatInBody]
-    }]
-        }
+    btn.addEventListener("click", function () {
+        bodyFat(system, sex);
     });
+
+    //d hdf   hdh d    h  dg  h  
+  
+        
 });
